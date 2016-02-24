@@ -24,7 +24,6 @@ class Model_Registration extends Model {
         }
 
 
-
         $email = $info[email];
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) {
             return false;

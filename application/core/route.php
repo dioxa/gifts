@@ -1,8 +1,7 @@
 ﻿<?php
-class Route
-{
-	static function start()
-	{
+class Route {
+
+    static function start() {
         $controller_name = 'Main';
         $action_name = 'index';
         $profile_name = '';
@@ -14,7 +13,7 @@ class Route
 
         if ( !empty($routes[2]) ) {
             if($controller_name == "profile") {
-                $profile_name = $_SESSION["username"];
+                $profile_name = $routes[2];
             } else {
                 $action_name = $routes[2];
             }
@@ -50,13 +49,13 @@ class Route
         } else {
             Route::ErrorPage404();
         }
-	}
-	
-	function ErrorPage404() {
-		$host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-		header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		header('Location:'.$host.'404');
-	}
+    }
+
+    function ErrorPage404() {
+        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+        header('HTTP/1.1 404 Not Found');
+        header("Status: 404 Not Found");
+        header('Location:'.$host.'404');
+    }
 }
 ?>

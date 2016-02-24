@@ -48,7 +48,7 @@
 
         $("#email").blur(function () {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if( re.test(document.getElementById("3").value)){
+            if( re.test(document.getElementById("3").value)) {
                 $("#check_mail").html("Сойдет");
             } else {
                 $("#check_mail").html("Ошибка");
@@ -56,7 +56,7 @@
         });
 
         function check(id) {
-            if(document.getElementById(id).value == ""){
+            if(document.getElementById(id).value == "") {
                 document.getElementById(id).style.borderColor= "red";
                 return false;
             } else {
@@ -82,12 +82,12 @@
 <?php
     echo"<form method='POST' action='/Registration/load'>
     Имя: <input id='firstname' type='text' name='info[firstname]' /><br>
-	Фамилия: <input id='lastname' type='text' name='info[lastname]' />
-	Логин : <input id='login' type='text' name='info[login]' /><br>
-	Пароль: <input id='password' type='password' name='info[password]'/>
-	повторите пароль: <input id='repeat' type='password' name='pass'/><div id = 'check_pass'></div>
-	email: <input id='email' type='text' name='info[email]' /><div id = 'check_mail'></div><br>
-	день рождения: <select name='info[year]'>";
+    Фамилия: <input id='lastname' type='text' name='info[lastname]' />
+    Логин : <input id='login' type='text' name='info[login]' /><br>
+    Пароль: <input id='password' type='password' name='info[password]'/>
+    повторите пароль: <input id='repeat' type='password' name='pass'/><div id = 'check_pass'></div>
+    email: <input id='email' type='text' name='info[email]' /><div id = 'check_mail'></div><br>
+    день рождения: <select name='info[year]'>";
 
     for($i = 1940; $i < 2017; $i++) {
         echo "<option value=$i>$i</option>";
@@ -108,6 +108,6 @@
     <option value='Ж'>Ж</option>
     <option value='М'>М</option>
     </select>
-	<input id='button' type='submit' value='Зарегистрироваться'>
+    <input id='button' type='submit' value='Зарегистрироваться'>
     </form>";
 ?>
