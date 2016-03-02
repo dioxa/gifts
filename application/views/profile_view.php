@@ -1,8 +1,15 @@
 <?php
-print_r($_SESSION);
-echo "<a href='/gift'>Добавить подарок</a>";
-echo"<img src='$data[photo]' height='200' width='100'>
-$data[firstname] $data[lastname]";
-echo"<a href='/settings'>Настройки</a>";
-echo"<a href='/login/logout'>logout</a>";
+echo "<a href='/gift'>Добавить подарок</a><br>
+    <a href='/settings'>Настройки</a><br>
+    <a href='/login/logout'>logout</a><br>";
+echo"<img src=" . $data["user_info"]["photo"] . " height='200' width='100'>";
+echo $data["user_info"]["firstname"] . " " . $data["user_info"]["lastname"];
+echo "<br>";
+
+if(isset($data["gift_info"])) {
+    foreach ($data["gift_info"] as $photo) {
+        echo "<img src='$photo' height='100' width='100'>";
+    }
+}
+
 ?>

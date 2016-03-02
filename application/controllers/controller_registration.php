@@ -1,6 +1,5 @@
 <?php
-class Controller_Registration extends Controller
-{
+class Controller_Registration extends Controller {
 
     function __construct() {
         $this->model = new Model_registration();

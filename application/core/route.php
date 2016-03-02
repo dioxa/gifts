@@ -7,14 +7,18 @@ class Route {
         $profile_name = '';
         $routes = explode('/', $_SERVER['REQUEST_URI']);
 
-        if ( !empty($routes[1]) ) {
+        if( $routes[1] == "profile" ) {
             $controller_name = $routes[1];
-        }
-
-        if ( !empty($routes[2]) ) {
-            if($controller_name == "profile") {
+            if( !empty($routes[2]) ) {
                 $profile_name = $routes[2];
             } else {
+                $profile_name = $_SESSION["username"];
+            }
+        } else {
+            if ( !empty($routes[1]) ) {
+                $controller_name = $routes[1];
+            }
+            if ( !empty($routes[2]) ) {
                 $action_name = $routes[2];
             }
         }
@@ -37,12 +41,12 @@ class Route {
             Route::ErrorPage404();
         }
 
-        $controller = new $controller_name;
+        $controller = new $controller_name($profile_name);
         $action = $action_name;
 
         if(method_exists($controller, $action)) {
             if($controller_name == "Controller_profile") {
-                $controller->$action($profile_name);
+                $controller->$action();
             } else {
                 $controller->$action();
             }

@@ -5,7 +5,7 @@ class Model_Registration extends Model {
 
         require_once("application/core/connect_db.php");
 
-        $password = $info[password];
+        $password = $info["password"];
         if(!empty($password)) {
             if (strlen($password) <= '8') {
                 return false;
@@ -24,22 +24,22 @@ class Model_Registration extends Model {
         }
 
 
-        $email = $info[email];
+        $email = $info["email"];
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) {
             return false;
         }
 
         $salt = bin2hex(mcrypt_create_iv(9, MCRYPT_RAND));
-        $info[password] = hash('sha256', "$info[password]".$salt);
+        $info["password"] = hash('sha256', "$info[password]".$salt);
 
-        if($info[month] >= 10) {
-            $info[month] = "0" . $info[month];
+        if($info["month"] < 10) {
+            $info["month"] = "0" . $info["month"];
         }
-        if($info[day] >= 10) {
-            $info[day] = "0" . $info[month];
+        if($info["day"] < 10) {
+            $info["day"] = "0" . $info["day"];
         }
 
-        $date = $info[year].$info[month].$info[day];
+        $date = $info["year"].$info["month"].$info["day"];
         $role = 1;
         $registre_date = date("YmdHis");
 
