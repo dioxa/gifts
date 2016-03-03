@@ -4,10 +4,9 @@ class Route {
     static function start() {
         $controller_name = 'Main';
         $action_name = 'index';
-        $profile_name = '';
         $routes = explode('/', $_SERVER['REQUEST_URI']);
 
-        if( $routes[1] == "profile" ) {
+        if( $routes[1] == "profile" && $routes[2] != "subscribe") {
             $controller_name = $routes[1];
             if( !empty($routes[2]) ) {
                 $profile_name = $routes[2];
@@ -41,15 +40,15 @@ class Route {
             Route::ErrorPage404();
         }
 
-        $controller = new $controller_name($profile_name);
+        if(isset($profile_name)) {
+            $controller = new $controller_name($profile_name);
+        } else {
+            $controller = new $controller_name();
+        }
         $action = $action_name;
 
         if(method_exists($controller, $action)) {
-            if($controller_name == "Controller_profile") {
-                $controller->$action();
-            } else {
-                $controller->$action();
-            }
+            $controller->$action();
         } else {
             Route::ErrorPage404();
         }

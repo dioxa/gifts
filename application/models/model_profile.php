@@ -25,6 +25,8 @@ class Model_Profile extends Model {
 
         $stmt->execute();
 
+       $_POST["username"] = $this->username;
+
         if ($stmt->rowCount() > 0) {
             $result["gift_info"] = $stmt->fetch(PDO::FETCH_ASSOC);
         }
