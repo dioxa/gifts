@@ -24,7 +24,18 @@ if(isset($data["subscribers"])) {
             echo "<img src=" . $subscriber['photo'] . " height='100' width='100'> $subscriber[firstname] $subscriber[lastname]";
         }
     } else {
-        echo "<img src=" . $data['subscribers']['photo'] . " height='100' width='100'>" . $data['subscribers']['firstname'] . " " . $data['subscribers']['lastname'];
+        echo "<img src=" . $data['subscribers']['photo'] . " height='100' width='100'><a href='/profile/" . $data['subscribers']['username'] . "'>" . $data['subscribers']['firstname'] . " " . $data['subscribers']['lastname'] . "</a>";
+    }
+}
+
+if(isset($data["followers"])) {
+    echo "<br> Подписчики:";
+    if($data["followers_count"] > 1) {
+        foreach ($data["followers"] as $follower) {
+            echo "<img src=" . $follower['photo'] . " height='100' width='100'> $follower[firstname] $follower[lastname]";
+        }
+    } else {
+        echo "<img src=" . $data['followers']['photo'] . " height='100' width='100'><a href='/profile/" . $data['followers']['username'] . "'>" . $data['followers']['firstname'] . " " . $data['followers']['lastname'] . "</a>";
     }
 }
 

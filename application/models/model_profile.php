@@ -31,13 +31,22 @@ class Model_Profile extends Model {
             $result["gift_info"] = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        $stmt = $connection->prepare("SELECT id, firstname, lastname, photo FROM user JOIN (select subscriber_id from subscribers join (select id from user where username = '$this->username') as sub on user_id = sub.id) as subscribers on subscribers.subscriber_id = id");
+        $stmt = $connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select subscriber_id from subscribers join (select id from user where username = '$this->username') as sub on user_id = sub.id) as subscribers on subscribers.subscriber_id = id");
 
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $result["subscribers_count"] = $stmt->rowCount();
             $result["subscribers"] = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        $stmt = $connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select user_id from subscribers join (select id from user where username = '$this->username') as sub on subscriber_id = sub.id) as subscribers on subscribers.user_id = id");
+
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $result["followers_count"] = $stmt->rowCount();
+            $result["followers"] = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         return $result;
