@@ -6,12 +6,22 @@ class Controller_gift extends controller {
         $this->view = new View();
     }
 
-    function action_index() {
-        $this->view->generate('gift_view.php', 'template_view.php');
+    function action_index($giftId) {
+        $data = $this->model->get_data($giftId);
+        $this->view->generate('gift_view.php', 'template_view.php', $data);
+    }
+    
+    function action_add() {
+        $this->view->generate('giftAdd_view.php', 'template_view.php');
     }
 
     function action_adding() {
         $this->model->addGift($_POST["gift"]);
         header("location:/");
+    }
+
+    function action_bind($id) {
+        $this->model->bindGift($id);
+        
     }
 }

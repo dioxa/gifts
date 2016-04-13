@@ -1,6 +1,38 @@
 <?php
 class Model_Gift extends Model {
 
+    public function get_data($giftId) {
+        require_once("application/core/connect_db.php");
+
+        $instance = settings::getInstance();
+        $connection = $instance->getConnection();
+
+        $query = $connection->prepare("Select id, name, description, photo from gift where id = '$giftId'");
+        $query->execute();
+
+        $result["gift"] = $query->fetch(PDO::FETCH_ASSOC);
+
+        $query = $connection->prepare("select username from user JOIN (SELECT reciever_id from wishes where gift_id = '$giftId') as gift on gift.reciever_id = id");
+        $query->execute();
+
+        if ($query->rowCount() > 0) {
+            $result["owner"] = true;
+        }
+        
+        return $result;
+    }
+
+    public function bindGift($id) {
+        require_once("application/core/connect_db.php");
+
+        $instance = settings::getInstance();
+        $connection = $instance->getConnection();
+
+        $query = $connection->prepare("UPDATE wishes SET sender_id=:userId WHERE gift_id='$id'");
+        $query->bindParam(':userId', $_SESSION["id"]);
+        $query->execute();
+    }
+
     public function addGift($gift_info) {
         require_once("application/core/connect_db.php");
 

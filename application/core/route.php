@@ -1,30 +1,22 @@
-﻿<?php
+<?php
 class Route {
 
     static function start() {
         $controller_name = 'Main';
-        $action_name = 'index';
+        $action = 'index';
         $routes = explode('/', $_SERVER['REQUEST_URI']);
 
-        if( $routes[1] == "profile" && $routes[2] != "subscribe") {
+        if ( !empty($routes[1]) ) {
             $controller_name = $routes[1];
-            if( !empty($routes[2]) ) {
-                $profile_name = $routes[2];
-            } else {
-                $profile_name = $_SESSION["username"];
-            }
-        } else {
-            if ( !empty($routes[1]) ) {
-                $controller_name = $routes[1];
-            }
-            if ( !empty($routes[2]) ) {
-                $action_name = $routes[2];
-            }
         }
+        if ( !empty($routes[2]) ) {
+            $action = $routes[2];
+        }
+
 
         $model_name = 'Model_'.$controller_name;
         $controller_name = 'Controller_'.$controller_name;
-        $action_name = 'action_'.$action_name;
+        $action_name = 'action_'.$action;
 
         $model_file = strtolower($model_name).'.php';
         $model_path = "application/models/".$model_file;
@@ -40,15 +32,15 @@ class Route {
             Route::ErrorPage404();
         }
 
-        if(isset($profile_name)) {
-            $controller = new $controller_name($profile_name);
-        } else {
-            $controller = new $controller_name();
-        }
-        $action = $action_name;
+        $controller = new $controller_name();
 
-        if(method_exists($controller, $action)) {
-            $controller->$action();
+        if(!method_exists($controller, $action_name)) {
+            $param_name = $action;
+            $action_name = 'action_index';
+            $controller->$action_name($param_name);
+        } else
+        if(method_exists($controller, $action_name)) {
+            $controller->$action_name();
         } else {
             Route::ErrorPage404();
         }

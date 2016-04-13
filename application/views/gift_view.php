@@ -1,8 +1,23 @@
-<?php
-echo"<form action='/gift/adding' method='post' enctype='multipart/form-data'>
-    Select image to upload:
-    <input type='file' name='image' id='fileToUpload'>
-    <input type='text' name='gift[name]'>
-    <textarea name='gift[desc]'></textarea>
-    <input type='submit' value='Upload Image' name='submit'>
-</form>";
+<div class="col-lg-6">
+    <?php
+        echo "<img src='" . $data['gift']['photo'] . "' class='img-responsive'>";
+
+    ?>
+</div>
+<div class="col-lg-6">
+    <div class="col-lg-12">
+        <?php
+            echo $data['gift']["name"];
+        ?>
+    </div>
+    <div class="col-lg-12">
+        <?php
+            echo $data['gift']["description"];
+        ?>
+    </div>
+    <?php
+        if (isset($data['user'])) {
+            echo '<a href="/gift/bind/' . $data["id"] . '" class="btn btn-success">Подарить</a>';
+        }
+    ?>
+</div>

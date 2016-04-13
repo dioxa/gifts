@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if(!isset($_SESSION["username"])) {
     echo '<form method="POST" action="/login"><br>
     <input type="text" name="login" placeholder="login"/><br>

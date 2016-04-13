@@ -41,13 +41,14 @@ class Model_Registration extends Model {
 
         $date = $info["year"].$info["month"].$info["day"];
         $role = 1;
-        $registre_date = date("YmdHis");
+        $created_at = date("YmdHis");
 
         $instance = settings::getInstance();
         $connection = $instance->getConnection();
 
-        $query = $connection->prepare("INSERT INTO user (firstname, lastname, password, username, email, birthday, register_date, last_access, role_id, salt, sex) VALUES ('$info[firstname]', '$info[lastname]', '$info[password]', '$info[login]', '$info[email]', $date, $registre_date, $registre_date, $role, '$salt', '$info[sex]')");
+        $query = $connection->prepare("INSERT INTO user (firstname, lastname, password, username, email, birthday, created_at, updated_at, role_id, salt, sex) VALUES ('$info[firstname]', '$info[lastname]', '$info[password]', '$info[login]', '$info[email]', $date, $created_at, $created_at, $role, '$salt', '$info[sex]')");
 
+        print_r($query->errorInfo());
         $query->execute();
     }
 }

@@ -1,14 +1,6 @@
 <?php
-echo '<form method="POST" action="/search">
-    <input type="text" name="username">
-    <input type="submit" value="Найти"><br>
-    </form>';
 
-echo "<a href='/profile/'>Моя страница</a><br>
-    <a href='/gift'>Добавить подарок</a><br>
-    <a href='/settings'>Настройки</a><br>
-    <a href='/login/logout'>logout</a><br>";
-echo"<img src=" . $data["user_info"]["photo"] . " height='200' width='150'>";
+echo"<img src=" . $data["user_info"]["photo"] . " height='200' width='150' class = 'img-responsive'>";
 echo $data["user_info"]["firstname"] . " " . $data["user_info"]["lastname"];
 echo "<br>";
 if($_SESSION["username"] != $_POST["username"]) {
@@ -19,10 +11,12 @@ if($_SESSION["username"] != $_POST["username"]) {
 }
 
 
+
+echo "<br> Желания:<br>";
+echo'<div class="col-lg-4"><div class="col-lg-3 table-bordered" ><a href="/gift"><img src="../../uploads/add.jpg" class="img-rounded"></a></div></div>';
 if(isset($data["gifts"])) {
-    echo "<br> Желания:";
     foreach ($data["gifts"] as $photo) {
-        echo "<img src='". $photo["photo"] . "' height='100' width='100'>";
+        echo "<div class='col-lg-4' height='421'><a href='/gift/" . $photo["id"] . "'><img src='". $photo["photo"] . "' class='img-responsive'></a></div>";
     }
     echo "<br>";
 }
