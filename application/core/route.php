@@ -12,6 +12,9 @@ class Route {
         if ( !empty($routes[2]) ) {
             $action = $routes[2];
         }
+        if ( !empty($routes[3]) ) {
+            $param_name = $routes[3];
+        }
 
 
         $model_name = 'Model_'.$controller_name;
@@ -40,7 +43,12 @@ class Route {
             $controller->$action_name($param_name);
         } else
         if(method_exists($controller, $action_name)) {
-            $controller->$action_name();
+            if (isset($param_name)) {
+                $controller->$action_name($param_name);
+            } else {
+                $controller->$action_name();
+            }
+
         } else {
             Route::ErrorPage404();
         }

@@ -13,7 +13,7 @@ if($_SESSION["username"] != $_POST["username"]) {
 
 
 echo "<br> Желания:<br>";
-echo'<div class="col-lg-4"><div class="col-lg-3 table-bordered" ><a href="/gift"><img src="../../uploads/add.jpg" class="img-rounded"></a></div></div>';
+echo'<div class="col-lg-4"><div class="col-lg-3 table-bordered" ><a href="/gift/add"><img src="../../uploads/add.jpg" class="img-rounded"></a></div></div>';
 if(isset($data["gifts"])) {
     foreach ($data["gifts"] as $photo) {
         echo "<div class='col-lg-4' height='421'><a href='/gift/" . $photo["id"] . "'><img src='". $photo["photo"] . "' class='img-responsive'></a></div>";
