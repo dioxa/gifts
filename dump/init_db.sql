@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `gifts` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gifts`;
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
--- Host: 127.0.0.1    Database: gifts
+-- Host: localhost    Database: gifts
 -- ------------------------------------------------------
--- Server version	5.6.25-log
+-- Server version	5.7.11-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +39,7 @@ DROP TABLE IF EXISTS `gift`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gift` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` varchar(255) NOT NULL,
   `date_created` datetime NOT NULL,
@@ -49,7 +47,7 @@ CREATE TABLE `gift` (
   `photo` varchar(255) NOT NULL,
   `closed` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,18 +95,18 @@ CREATE TABLE `user` (
   `password` varchar(100) NOT NULL,
   `username` varchar(20) NOT NULL,
   `email` varchar(80) NOT NULL,
-  `email_confirmed` tinyint(1) NOT NULL DEFAULT '0',
-  `photo` varchar(255) DEFAULT NULL,
+  `email_confirmed` tinyint(1) DEFAULT '0',
+  `photo` varchar(255) DEFAULT '/uploads/profile/mzl.qdfvhgoj.jpg',
   `birthday` date NOT NULL,
   `sex` varchar(1) NOT NULL,
-  `register_date` datetime NOT NULL,
-  `last_access` datetime NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `gifted` int(11) NOT NULL DEFAULT '0',
-  `non_gifted` int(11) NOT NULL DEFAULT '0',
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `gifted` int(11) DEFAULT '0',
+  `non_gifted` int(11) DEFAULT '0',
   `salt` varbinary(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,14 +118,13 @@ DROP TABLE IF EXISTS `wishes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wishes` (
   `receiver_id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
+  `sender_id` int(11) DEFAULT NULL,
   `gift_id` int(11) NOT NULL,
-  PRIMARY KEY (`receiver_id`,`sender_id`,`gift_id`),
-  KEY `FK_gift_id_idx` (`gift_id`),
+  PRIMARY KEY (`receiver_id`,`gift_id`),
   KEY `FK_sender_id_idx` (`sender_id`),
+  KEY `FK_gift_id` (`gift_id`),
   CONSTRAINT `FK_gift_id` FOREIGN KEY (`gift_id`) REFERENCES `gift` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_receiver_id` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_sender_id` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_receiver_id` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -140,4 +137,4 @@ CREATE TABLE `wishes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-23 19:32:27
+-- Dump completed on 2016-04-15 16:27:56
