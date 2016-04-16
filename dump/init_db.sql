@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `gifts` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `gifts`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
 -- Host: localhost    Database: gifts
@@ -137,4 +139,4 @@ CREATE TABLE `wishes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-15 16:27:56
+-- Dump completed on 2016-04-16 19:40:30
