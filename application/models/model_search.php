@@ -12,7 +12,7 @@ class Model_Search extends Model {
         $stmt->execute();
 
         $result["users_count"] = $stmt->rowCount();
-        $result["users"] = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result["users"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 }

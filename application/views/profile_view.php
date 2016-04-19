@@ -3,6 +3,7 @@
 echo"<img src=" . $data["user_info"]["photo"] . " height='200' width='150' class = 'img-responsive'>";
 echo $data["user_info"]["firstname"] . " " . $data["user_info"]["lastname"];
 echo "<br>";
+
 if($_SESSION["username"] != $_POST["username"]) {
     echo"<form method='POST' action='/subscribe'>
     <input type='hidden' value='$_POST[username]' name='username'>

@@ -3,7 +3,7 @@ if(isset($data["users"])) {
     echo"Найдено: " .  $data['users_count'] . " пользователей<br>";
     if($data['users_count'] > 1) {
         foreach ($data["users"] as $user) {
-            echo "$user[firstname] $user[lastname] <img src='$user[photo]' height='100' width='100'><br>";
+            echo "<a href='/" . $user["username"] . "'> $user[firstname] $user[lastname] <img src='$user[photo]' height='100' width='100'></a><br>";
         }
     } else {
 
