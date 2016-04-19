@@ -59,7 +59,7 @@ class Model_Gift extends Model {
             }
         }
 
-        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
             $uploadOk = 0;
         }
 
