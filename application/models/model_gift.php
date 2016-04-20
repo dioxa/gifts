@@ -35,41 +35,18 @@ class Model_Gift extends Model {
 
     public function addGift($gift_info) {
         require_once("application/core/connect_db.php");
+        require_once ("application/core/upload_image.php");
 
         $instance = settings::getInstance();
         $connection = $instance->getConnection();
 
-        $imageFileType = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-
-        do {
-            $info = md5(microtime() . rand(0, 9999));
-            $target_dir = "uploads" . "/" . substr($info, 0 , 5). "/" . substr($info, 6 , 5) . "/";
-            $target_file = $target_dir . substr($info, 7 , 5) . ".$imageFileType";
-        } while (file_exists($target_file));
-
-        $uploadOk = 1;
-
-
-        if (isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["image"]["tmp_name"]);
-            if ($check !== false) {
-                $uploadOk = 1;
-            } else {
-                $uploadOk = 0;
-            }
-        }
-
-        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-            $uploadOk = 0;
-        }
-
-        if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-        } else {
-            mkdir($target_dir, 0777, true);
-            if ( move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        $file = UploadImage::validateImage();
+        
+        if ($file !== false) {
+            mkdir($file['target_dir'], 0777, true);
+            if ( move_uploaded_file($_FILES["image"]["tmp_name"], $file['target_file'])) {
                 echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
-                $file_path = "/" . $target_file;
+                $file_path = "/" . $file['target_file'];
                 $date_created = date("YmdHis");;
 
                 $query = $connection->prepare("INSERT INTO gift (name, description, date_created, photo) VALUES ('$gift_info[name]',

@@ -12,6 +12,6 @@ class Controller_Settings extends Controller {
 
     function action_setphoto() {
         $this->model->setProfilePhoto();
-        header("location:/");
+        //header("location:/");
     }
 }
