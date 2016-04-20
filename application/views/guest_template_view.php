@@ -19,16 +19,16 @@
         <div class="container-fluid">
             <div class="navbar-header">
                     <ul class="nav navbar-toggle but collapsed" data-toggle="collapse">
-                        <li><a href="#">Зарегистрироваться</a></li>
+                        <li><a href="/registration">Зарегистрироваться</a></li>
                     </ul>
 
-                <a class="navbar-brand" href="#">Сервис подарков</a>
+                <a class="navbar-brand" href="/">Сервис подарков</a>
             </div>
 
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right" >
-                    <li><a href="#">Зарегистрироваться</a></li>
+                    <li><a href="/registration">Зарегистрироваться</a></li>
                 </ul>
             </div>
         </div>
