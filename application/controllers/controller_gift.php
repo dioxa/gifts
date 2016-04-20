@@ -8,7 +8,11 @@ class Controller_gift extends controller {
 
     function action_index($giftId) {
         $data = $this->model->get_data($giftId);
-        $this->view->generate('gift_view.php', 'template_view.php', $data);
+        if (!empty($data["gift"])) {
+            $this->view->generate('gift_view.php', 'template_view.php', $data);
+        } else {
+            Route::ErrorPage404();
+        }
     }
     
     function action_add() {
