@@ -11,7 +11,7 @@ class Controller_Profile extends Controller {
             $username = $_SESSION["username"];
         }
         $data = $this->model->get_data($username);
-        if (!empty($data["user_info"])) {
+        if (!empty($data["userInfo"])) {
             $this->view->generate('profile_view.php', 'template_view.php', $data);
         } else {
             Route::ErrorPage404();

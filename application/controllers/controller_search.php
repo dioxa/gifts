@@ -1,5 +1,5 @@
 <?php
-Class Controller_Search extends controller {
+Class Controller_Search extends Controller {
     
     function __construct() {
         $this->model = new Model_Search();

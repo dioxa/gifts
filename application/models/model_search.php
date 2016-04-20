@@ -11,7 +11,7 @@ class Model_Search extends Model {
 
         $stmt->execute();
 
-        $result["users_count"] = $stmt->rowCount();
+        $result["usersCount"] = $stmt->rowCount();
         $result["users"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }

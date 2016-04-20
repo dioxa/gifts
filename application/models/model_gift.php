@@ -33,30 +33,30 @@ class Model_Gift extends Model {
         $query->execute();
     }
 
-    public function addGift($gift_info) {
+    public function addGift($giftInfo) {
         require_once("application/core/connect_db.php");
-        require_once ("application/core/upload_image.php");
+        require_once ("application/core/uploadValidator.php");
 
         $instance = settings::getInstance();
         $connection = $instance->getConnection();
 
-        $file = UploadImage::validateImage();
+        $file = UploadValidator::validateImage();
         
         if ($file !== false) {
-            mkdir($file['target_dir'], 0777, true);
-            if ( move_uploaded_file($_FILES["image"]["tmp_name"], $file['target_file'])) {
+            mkdir($file['targetDir'], 0777, true);
+            if ( move_uploaded_file($_FILES["image"]["tmp_name"], $file['targetFile'])) {
                 echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
-                $file_path = "/" . $file['target_file'];
+                $filePath = "/" . $file['targetFile'];
                 $date_created = date("YmdHis");;
 
-                $query = $connection->prepare("INSERT INTO gift (name, description, date_created, photo) VALUES ('$gift_info[name]',
-                '$gift_info[desc]', $date_created, '$file_path')");
+                $query = $connection->prepare("INSERT INTO gift (name, description, date_created, photo) VALUES ('$giftInfo[name]',
+                '$giftInfo[desc]', $date_created, '$filePath')");
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();
 
-                $query = $connection->prepare("INSERT INTO wishes (receiver_id, gift_id) VALUES (:user_id, (SELECT id from gift where photo = '$file_path'))");
-                $query->bindParam(":user_id", $_SESSION["id"]);
+                $query = $connection->prepare("INSERT INTO wishes (receiver_id, gift_id) VALUES (:userId, (SELECT id from gift where photo = '$filePath'))");
+                $query->bindParam(":userId", $_SESSION["id"]);
 
                 $query->execute();
 

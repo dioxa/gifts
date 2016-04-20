@@ -15,10 +15,10 @@ class Model_Login extends Model {
         $numrows = $stmt->rowCount();
 
         if ($numrows == 1) {
-            $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($user_info["email"] == $username && hash('sha256', $password . $user_info[salt]) == $user_info["password"]) {
-                $_SESSION["username"] = $user_info["username"];
-                $_SESSION["id"] = $user_info["id"];
+            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($userInfo["email"] == $username && hash('sha256', $password . $userInfo[salt]) == $userInfo["password"]) {
+                $_SESSION["username"] = $userInfo["username"];
+                $_SESSION["id"] = $userInfo["id"];
             }
         }
     }

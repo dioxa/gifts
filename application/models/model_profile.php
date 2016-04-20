@@ -12,7 +12,7 @@ class Model_Profile extends Model {
 
         $stmt->execute();
 
-        $result["user_info"] = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result["userInfo"] = $stmt->fetch(PDO::FETCH_ASSOC);
         
         $stmt = $connection->prepare("SELECT photo, id FROM gift JOIN (select receiver_id, gift_id from wishes join (select id from user where username = :username) as users on receiver_id = users.id) as wish_list on wish_list.gift_id = id");
         $stmt->bindParam(":username", $username);

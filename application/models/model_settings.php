@@ -4,7 +4,7 @@ class Model_Settings extends Model {
 
     public function setProfilePhoto() {
         require_once("application/core/connect_db.php");
-        require_once ("application/core/upload_image.php");
+        require_once ("application/core/uploadValidator.php");
 
         $instance = settings::getInstance();
         $connection = $instance->getConnection();
@@ -18,15 +18,15 @@ class Model_Settings extends Model {
             unlink(substr($path["photo"], 1));
         }
 
-        $file = UploadImage::validateImage();
+        $file = UploadValidator::validateImage();
 
         if ($file !== false) {
-            mkdir($file['target_dir'], 0777, true);
-            if ( move_uploaded_file($_FILES["image"]["tmp_name"], $file['target_file'])) {
+            mkdir($file['targetDir'], 0777, true);
+            if ( move_uploaded_file($_FILES["image"]["tmp_name"], $file['targetFile'])) {
                 echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
-                $file_path = "/" . $file['target_file'];
+                $filePath = "/" . $file['targetFile'];
 
-                $query = $connection->prepare("update user set photo = '$file_path' where username = :username");
+                $query = $connection->prepare("update user set photo = '$filePath' where username = :username");
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();

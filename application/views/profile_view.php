@@ -1,7 +1,7 @@
 <?php
 
-echo"<img src=" . $data["user_info"]["photo"] . " height='200' width='150' class = 'img-responsive'>";
-echo $data["user_info"]["firstname"] . " " . $data["user_info"]["lastname"];
+echo"<img src=" . $data["userInfo"]["photo"] . " height='200' width='150' class = 'img-responsive'>";
+echo $data["userInfo"]["firstname"] . " " . $data["userInfo"]["lastname"];
 echo "<br>";
 
 if($_SESSION["username"] != $_POST["username"]) {
