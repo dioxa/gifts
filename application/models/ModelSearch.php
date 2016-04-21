@@ -1,10 +1,10 @@
 <?php
-class Model_Search extends Model {
+class ModelSearch extends Model {
 
-    public function get_profile($username) {
-        require_once 'application/core/connect_db.php';
+    public function getProfile($username) {
+        require_once 'application/core/Connect.php';
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $stmt = $connection->prepare("SELECT username, firstname, lastname, photo FROM user where username like '$username%';");

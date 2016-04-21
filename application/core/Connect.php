@@ -1,5 +1,5 @@
 <?php
-class Settings {
+class Connect {
 
     private $connection;
     private static $instance;

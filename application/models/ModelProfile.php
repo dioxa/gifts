@@ -1,10 +1,10 @@
 <?php
-class Model_Profile extends Model {
+class ModelProfile extends Model {
 
-    public function get_data($username) {
-        require_once 'application/core/connect_db.php';
+    public function getData($username) {
+        require_once 'application/core/Connect.php';
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $stmt = $connection->prepare("SELECT firstname, lastname, photo FROM user  WHERE username = :username");
@@ -19,7 +19,13 @@ class Model_Profile extends Model {
 
         $stmt->execute();
 
-       $_POST["username"] = $username;
+        if (!empty($_SESSION["username"])) {
+            if ($_SESSION["username"] != $username) {
+                $_POST["username"] = $username;
+            }
+        } else {
+            $_POST["guest"] = true;
+        }
         
         if ($stmt->rowCount() > 0) {
             $result["gifts"] = $stmt->fetchAll(PDO::FETCH_ASSOC);

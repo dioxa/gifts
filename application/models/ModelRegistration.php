@@ -1,9 +1,9 @@
 <?php
-class Model_Registration extends Model {
+class ModelRegistration extends Model {
 
-    public function set_data($info) {
+    public function setData($info) {
 
-        require_once("application/core/connect_db.php");
+        require_once("application/core/Connect.php");
 
         $password = $info["password"];
         if(!empty($password)) {
@@ -43,7 +43,7 @@ class Model_Registration extends Model {
         $role = 1;
         $createdAt = date("YmdHis");
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $query = $connection->prepare("INSERT INTO user (firstname, lastname, password, username, email, birthday, createdAt, updated_at, role_id, salt, sex) VALUES ('$info[firstname]', '$info[lastname]', '$info[password]', '$info[login]', '$info[email]', $date, $createdAt, $createdAt, $role, '$salt', '$info[sex]')");

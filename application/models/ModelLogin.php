@@ -1,11 +1,11 @@
 <?php
 
-class Model_Login extends Model {
+class ModelLogin extends Model {
 
     public function login($username, $password) {
-        require_once 'application/core/connect_db.php';
+        require_once 'application/core/Connect.php';
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $stmt = $connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
@@ -16,9 +16,11 @@ class Model_Login extends Model {
 
         if ($numrows == 1) {
             $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($userInfo["email"] == $username && hash('sha256', $password . $userInfo[salt]) == $userInfo["password"]) {
+            if ($userInfo["email"] == $username && hash('sha256', $password . $userInfo["salt"]) == $userInfo["password"]) {
                 $_SESSION["username"] = $userInfo["username"];
                 $_SESSION["id"] = $userInfo["id"];
+            } else {
+                return "Не правильный логин или пароль";
             }
         }
     }

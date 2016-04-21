@@ -1,11 +1,11 @@
 <?php
-class Controller_Subscribe extends Controller {
+class ControllerSubscribe extends Controller {
 
     function __construct() {
-        $this->model = new Model_Subscribe();
+        $this->model = new ModelSubscribe();
     }
     
-    function action_index() {
+    function actionIndex() {
         $this->model->subscribe();
         header("location:/profile/");
     }

@@ -3,7 +3,7 @@ class Route {
 
     static function start() {
         $controllerName = 'Main';
-        $action = 'index';
+        $action = 'Index';
         $routes = explode('/', $_SERVER['REQUEST_URI']);
 
         if ( !empty($routes[1]) ) {
@@ -17,17 +17,17 @@ class Route {
         }
 
 
-        $modelName = 'Model_'.$controllerName;
-        $controllerName = 'Controller_'.$controllerName;
-        $actionName = 'action_'.$action;
+        $modelName = 'Model'.$controllerName;
+        $controllerName = 'Controller'.$controllerName;
+        $actionName = 'action'.$action;
 
-        $modelFile = strtolower($modelName).'.php';
+        $modelFile = $modelName.'.php';
         $modelPath = "application/models/".$modelFile;
         if(file_exists($modelPath)) {
             include "application/models/".$modelFile;
         }
 
-        $controllerFile = strtolower($controllerName).'.php';
+        $controllerFile = $controllerName.'.php';
         $controllerPath = "application/controllers/".$controllerFile;
         if(file_exists($controllerPath)) {
             include "application/controllers/".$controllerFile;
@@ -39,7 +39,7 @@ class Route {
 
         if(!method_exists($controller, $actionName)) {
             $paramName = $action;
-            $actionName = 'action_index';
+            $actionName = 'actionIndex';
             $controller->$actionName($paramName);
         } else
         if(method_exists($controller, $actionName)) {

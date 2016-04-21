@@ -1,12 +1,12 @@
 <?php
 
-class Model_Settings extends Model {
+class ModelSettings extends Model {
 
     public function setProfilePhoto() {
-        require_once("application/core/connect_db.php");
-        require_once ("application/core/uploadValidator.php");
+        require_once("application/core/Connect.php");
+        require_once ("application/core/UploadValidator.php");
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $stmt = $connection->prepare("select photo from user where username = '$_SESSION[username]'");

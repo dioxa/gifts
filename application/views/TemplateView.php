@@ -15,7 +15,7 @@
     <body>
         <div class = "row header">
             <div class="col-lg-4">
-                <a href="/profile/"><img src="../../uploads/logo.jpg" height="50"></a>
+                <a href="/"><img src="../../uploads/logo.jpg" height="50"></a>
             </div>
             <div class="col-lg-4">
                 <form method="POST" action="/search">

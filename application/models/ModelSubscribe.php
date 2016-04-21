@@ -1,10 +1,10 @@
 <?php
-class Model_Subscribe extends Model {
+class ModelSubscribe extends Model {
 
     public function subscribe() {
-        require_once 'application/core/connect_db.php';
+        require_once 'application/core/Connect.php';
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $stmt = $connection->prepare("insert into subscribers(user_id, subscriber_id) values (:userId, (select id from user where username = :username))");

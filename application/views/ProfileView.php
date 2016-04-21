@@ -4,7 +4,7 @@ echo"<img src=" . $data["userInfo"]["photo"] . " height='200' width='150' class 
 echo $data["userInfo"]["firstname"] . " " . $data["userInfo"]["lastname"];
 echo "<br>";
 
-if($_SESSION["username"] != $_POST["username"]) {
+if(!empty($_POST["username"]) && !isset($_POST["guest"])) {
     echo"<form method='POST' action='/subscribe'>
     <input type='hidden' value='$_POST[username]' name='username'>
     <input type='submit' value='Подписаться'>
@@ -14,8 +14,10 @@ if($_SESSION["username"] != $_POST["username"]) {
 
 
 echo "<br> Желания:<br>";
-echo'<div class="col-lg-4"><div class="col-lg-3 table-bordered" ><a href="/gift/add"><img src="../../uploads/add.jpg" class="img-rounded"></a></div></div>';
-if(isset($data["gifts"])) {
+if(empty($_POST["username"]) && !isset($_POST["guest"])) {
+    echo '<div class="col-lg-4"><div class="col-lg-3 table-bordered" ><a href="/gift/add"><img src="../../uploads/add.jpg" class="img-rounded"></a></div></div>';
+}
+    if(isset($data["gifts"])) {
     foreach ($data["gifts"] as $photo) {
         echo "<div class='col-lg-4' height='421'><a href='/gift/" . $photo["id"] . "'><img src='". $photo["photo"] . "' class='img-responsive'></a></div>";
     }

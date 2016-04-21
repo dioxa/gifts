@@ -18,6 +18,11 @@ if(!isset($_SESSION["username"])) {
             </div>
         </div>
     </form>
+        <?php
+        if (isset($data)) {
+            echo "<br><h3>$data</h3>";
+        }
+        ?>
     </div>
 <?php
 } else {

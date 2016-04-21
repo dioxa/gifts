@@ -1,10 +1,10 @@
 <?php
-class Model_Gift extends Model {
+class ModelGift extends Model {
 
-    public function get_data($giftId) {
-        require_once("application/core/connect_db.php");
+    public function getData($giftId) {
+        require_once("application/core/Connect.php");
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $query = $connection->prepare("Select id, name, description, photo from gift where id = '$giftId'");
@@ -23,9 +23,9 @@ class Model_Gift extends Model {
     }
 
     public function bindGift($id) {
-        require_once("application/core/connect_db.php");
+        require_once("application/core/Connect.php");
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $query = $connection->prepare("UPDATE wishes SET sender_id=:userId WHERE gift_id='$id'");
@@ -34,10 +34,10 @@ class Model_Gift extends Model {
     }
 
     public function addGift($giftInfo) {
-        require_once("application/core/connect_db.php");
-        require_once ("application/core/uploadValidator.php");
+        require_once("application/core/Connect.php");
+        require_once ("application/core/UploadValidator.php");
 
-        $instance = settings::getInstance();
+        $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
         $file = UploadValidator::validateImage();

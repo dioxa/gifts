@@ -1,18 +1,18 @@
 <?php
-class Controller_Profile extends Controller {
+class ControllerProfile extends Controller {
 
     function __construct() {
-        $this->model = new Model_Profile();
+        $this->model = new ModelProfile();
         $this->view = new View();
     }
 
-    function action_index($username = NULL) {
+    function actionIndex($username = NULL) {
         if (!isset($username)) {
             $username = $_SESSION["username"];
         }
-        $data = $this->model->get_data($username);
+        $data = $this->model->getData($username);
         if (!empty($data["userInfo"])) {
-            $this->view->generate('profile_view.php', 'template_view.php', $data);
+            $this->view->generate('ProfileView.php', 'TemplateView.php', $data);
         } else {
             Route::ErrorPage404();
         }
