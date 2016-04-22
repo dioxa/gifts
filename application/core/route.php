@@ -30,8 +30,10 @@ class Route {
         $controllerFile = $controllerName.'.php';
         $controllerPath = "application/controllers/".$controllerFile;
         if(file_exists($controllerPath)) {
+            error_log("naiden $controllerPath", 0);
             include "application/controllers/".$controllerFile;
         } else {
+            error_log("Ne naiden $controllerPath", 0);
             Route::ErrorPage404();
         }
 

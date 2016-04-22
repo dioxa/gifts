@@ -8,14 +8,15 @@ class ModelLogin extends Model {
         $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
-        $stmt = $connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
+        $query = $connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
 
-        $stmt->execute();
+        $query->execute();
+        error_log( print_R($query->errorInfo(),TRUE) );
 
-        $numrows = $stmt->rowCount();
+        $numrows = $query->rowCount();
 
         if ($numrows == 1) {
-            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $userInfo = $query->fetch(PDO::FETCH_ASSOC);
             if ($userInfo["email"] == $username && hash('sha256', $password . $userInfo["salt"]) == $userInfo["password"]) {
                 $_SESSION["username"] = $userInfo["username"];
                 $_SESSION["id"] = $userInfo["id"];

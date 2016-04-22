@@ -7,11 +7,12 @@ class ModelSubscribe extends Model {
         $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
-        $stmt = $connection->prepare("insert into subscribers(user_id, subscriber_id) values (:userId, (select id from user where username = :username))");
+        $query = $connection->prepare("insert into subscribers(user_id, subscriber_id) values (:userId, (select id from user where username = :username))");
 
-        $stmt->bindParam(":userId", $_SESSION["id"]);
-        $stmt->bindParam(":username", $_POST["username"]);
+        $query->bindParam(":userId", $_SESSION["id"]);
+        $query->bindParam(":username", $_POST["username"]);
 
-        $stmt->execute();
+        $query->execute();
+        error_log( "Follow some user".print_R($query->errorInfo(),TRUE) );
     }
 }

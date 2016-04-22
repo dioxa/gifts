@@ -7,12 +7,13 @@ class ModelSearch extends Model {
         $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
-        $stmt = $connection->prepare("SELECT username, firstname, lastname, photo FROM user where username like '$username%';");
+        $query = $connection->prepare("SELECT username, firstname, lastname, photo FROM user where username like '$username%';");
 
-        $stmt->execute();
+        $query->execute();
+        error_log( "Getting result of searching".print_R($query->errorInfo(),TRUE) );
 
-        $result["usersCount"] = $stmt->rowCount();
-        $result["users"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result["usersCount"] = $query->rowCount();
+        $result["users"] = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 }

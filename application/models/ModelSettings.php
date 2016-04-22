@@ -9,11 +9,11 @@ class ModelSettings extends Model {
         $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
-        $stmt = $connection->prepare("select photo from user where username = '$_SESSION[username]'");
+        $query = $connection->prepare("select photo from user where username = '$_SESSION[username]'");
 
-        $stmt->execute();
+        $query->execute();
 
-        $path = $stmt->fetch(PDO::FETCH_ASSOC);
+        $path = $query->fetch(PDO::FETCH_ASSOC);
         if ($path["info"] != "/uploads/profile/mzl.qdfvhgoj.jpg") {
             unlink(substr($path["photo"], 1));
         }
@@ -30,6 +30,7 @@ class ModelSettings extends Model {
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();
+                error_log( "Setting profile photo".print_R($query->errorInfo(),TRUE) );
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
