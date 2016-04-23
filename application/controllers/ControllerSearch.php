@@ -8,6 +8,6 @@ Class ControllerSearch extends Controller {
 
     function actionIndex() {
         $data = $this->model->getProfile($_POST["username"]);
-        $this->view->generate('SearchView.php', 'TemplateView.php', $data);
+        $this->view->generate('SearchView.php', $data);
     }
 }

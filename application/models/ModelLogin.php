@@ -11,7 +11,7 @@ class ModelLogin extends Model {
         $query = $connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
 
         $query->execute();
-        error_log( print_R($query->errorInfo(),TRUE) );
+        //error_log( print_R($query->errorInfo(),TRUE) );
 
         $numrows = $query->rowCount();
 

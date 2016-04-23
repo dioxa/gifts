@@ -13,6 +13,6 @@ class ModelSubscribe extends Model {
         $query->bindParam(":username", $_POST["username"]);
 
         $query->execute();
-        error_log( "Follow some user".print_R($query->errorInfo(),TRUE) );
+        //error_log( "Follow some user".print_R($query->errorInfo(),TRUE) );
     }
 }

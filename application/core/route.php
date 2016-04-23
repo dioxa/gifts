@@ -17,9 +17,9 @@ class Route {
         }
 
 
-        $modelName = 'Model'.$controllerName;
-        $controllerName = 'Controller'.$controllerName;
-        $actionName = 'action'.$action;
+        $modelName = 'Model'.ucfirst($controllerName);
+        $controllerName = 'Controller'.ucfirst($controllerName);
+        $actionName = 'action'.ucfirst($action);
 
         $modelFile = $modelName.'.php';
         $modelPath = "application/models/".$modelFile;
@@ -30,10 +30,9 @@ class Route {
         $controllerFile = $controllerName.'.php';
         $controllerPath = "application/controllers/".$controllerFile;
         if(file_exists($controllerPath)) {
-            error_log("naiden $controllerPath", 0);
             include "application/controllers/".$controllerFile;
         } else {
-            error_log("Ne naiden $controllerPath", 0);
+            error_log("File not found. $controllerPath", 0);
             Route::ErrorPage404();
         }
 

@@ -11,7 +11,7 @@ class ControllerLogin extends Controller {
         if(isset($_SESSION["username"])) {
             header("Location:/profile/$_SESSION[username]");
         } else {
-            $this->view->generate("MainView.php", "GuestTemplateView.php", $access);
+            $this->view->generate("MainView.php", $access);
         }
 	}
     

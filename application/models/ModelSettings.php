@@ -30,7 +30,7 @@ class ModelSettings extends Model {
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();
-                error_log( "Setting profile photo".print_R($query->errorInfo(),TRUE) );
+                //error_log( "Setting profile photo".print_R($query->errorInfo(),TRUE) );
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }

@@ -6,11 +6,7 @@ class ControllerMain extends Controller {
     }
 	
     function actionIndex() {
-        if (empty($_SESSION)) {
-            $this->view->generate('MainView.php', 'GuestTemplateView.php');
-        } else {
-            $this->view->generate('MainView.php', 'TemplateView.php');
-        }
+            $this->view->generate('MainView.php');
     }
 }
 ?>

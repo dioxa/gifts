@@ -10,7 +10,7 @@ class ModelSearch extends Model {
         $query = $connection->prepare("SELECT username, firstname, lastname, photo FROM user where username like '$username%';");
 
         $query->execute();
-        error_log( "Getting result of searching".print_R($query->errorInfo(),TRUE) );
+        //error_log( "Getting result of searching".print_R($query->errorInfo(),TRUE) );
 
         $result["usersCount"] = $query->rowCount();
         $result["users"] = $query->fetchAll(PDO::FETCH_ASSOC);

@@ -7,7 +7,7 @@ class ControllerRegistration extends Controller {
     }
 
     function actionIndex() {
-        $this->view->generate('RegistrationView.php', 'TemplateView.php');
+        $this->view->generate('RegistrationView.php');
     }
 
     function actionLoad() {

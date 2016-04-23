@@ -12,7 +12,7 @@ class ControllerProfile extends Controller {
         }
         $data = $this->model->getData($username);
         if (!empty($data["userInfo"])) {
-            $this->view->generate('ProfileView.php', 'TemplateView.php', $data);
+            $this->view->generate('ProfileView.php', $data);
         } else {
             Route::ErrorPage404();
         }

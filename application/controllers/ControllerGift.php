@@ -9,14 +9,14 @@ class ControllerGift extends Controller {
     function actionIndex($giftId) {
         $data = $this->model->getData($giftId);
         if (!empty($data["gift"])) {
-            $this->view->generate('GiftView.php', 'TemplateView.php', $data);
+            $this->view->generate('GiftView.php', $data);
         } else {
             Route::ErrorPage404();
         }
     }
     
     function actionAdd() {
-        $this->view->generate('GiftAddView.php', 'TemplateView.php');
+        $this->view->generate('GiftAddView.php');
     }
 
     function actionAdding() {

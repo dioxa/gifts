@@ -7,7 +7,7 @@ class ControllerSettings extends Controller {
     }
 
     function actionIndex() {
-        $this->view->generate('SettingsView.php', 'TemplateView.php');
+        $this->view->generate('SettingsView.php');
     }
 
     function actionSetPhoto() {
