@@ -5,8 +5,8 @@ class Connect {
     private static $instance;
 
     private function __construct() {
-        $dbConfig = parse_ini_file("config.ini");
-        $this->connection = new PDO("mysql:dbname=$dbConfig[name];host=$dbConfig[host]", $dbConfig['login'], $dbConfig['pass']);
+        include_once "ConfigReader.php";
+        $this->connection = new PDO("mysql:dbname=" . ConfigReader::getInstance()->getField('DB', 'name') . ";host=". ConfigReader::getInstance()->getField('DB', 'host'), ConfigReader::getInstance()->getField('DB', 'login'), ConfigReader::getInstance()->getField('DB', 'pass'));
     }
 
     protected function __clone() {

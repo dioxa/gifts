@@ -1,4 +1,6 @@
 <?php
+include "application/core/Logger.php";
+
 class ModelSearch extends Model {
 
     public function getProfile($username) {
@@ -10,7 +12,7 @@ class ModelSearch extends Model {
         $query = $connection->prepare("SELECT username, firstname, lastname, photo FROM user where username like '$username%';");
 
         $query->execute();
-        //error_log( "Getting result of searching".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
 
         $result["usersCount"] = $query->rowCount();
         $result["users"] = $query->fetchAll(PDO::FETCH_ASSOC);

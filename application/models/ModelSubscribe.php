@@ -1,4 +1,6 @@
 <?php
+include "application/core/Logger.php";
+
 class ModelSubscribe extends Model {
 
     public function subscribe() {
@@ -13,6 +15,6 @@ class ModelSubscribe extends Model {
         $query->bindParam(":username", $_POST["username"]);
 
         $query->execute();
-        //error_log( "Follow some user".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
     }
 }

@@ -1,4 +1,6 @@
 <?php
+include "application/core/Logger.php";
+
 class ModelProfile extends Model {
 
     public function getData($username) {
@@ -11,7 +13,7 @@ class ModelProfile extends Model {
         $query->bindParam(":username", $username);
 
         $query->execute();
-        //error_log( "Getting information about User".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
 
         $result["userInfo"] = $query->fetch(PDO::FETCH_ASSOC);
         
@@ -19,7 +21,7 @@ class ModelProfile extends Model {
         $query->bindParam(":username", $username);
 
         $query->execute();
-        //error_log( "Getting gifts".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
 
         if (!empty($_SESSION["username"])) {
             if ($_SESSION["username"] != $username) {
@@ -36,7 +38,7 @@ class ModelProfile extends Model {
         $query = $connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select subscriber_id from subscribers join (select id from user where username = '$username') as sub on user_id = sub.id) as subscribers on subscribers.subscriber_id = id");
 
         $query->execute();
-        //error_log( "Getting Subsriptions".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
 
         if ($query->rowCount() > 0) {
             $result["subscribers"] = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -45,7 +47,7 @@ class ModelProfile extends Model {
         $query = $connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select user_id from subscribers join (select id from user where username = '$username') as sub on subscriber_id = sub.id) as subscribers on subscribers.user_id = id");
 
         $query->execute();
-        //error_log( "Getting followers".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
 
         if ($query->rowCount() > 0) {
             $result["followers"] = $query->fetchAll(PDO::FETCH_ASSOC);

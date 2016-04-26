@@ -1,4 +1,5 @@
 <?php
+include "application/core/Logger.php";
 
 class ModelSettings extends Model {
 
@@ -30,7 +31,7 @@ class ModelSettings extends Model {
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();
-                //error_log( "Setting profile photo".print_R($query->errorInfo(),TRUE) );
+                Logger::sqlError($query->errorInfo());
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }

@@ -1,4 +1,6 @@
 <?php
+include "application/core/Logger.php";
+
 class ModelRegistration extends Model {
 
     public function setData($info) {
@@ -49,7 +51,7 @@ class ModelRegistration extends Model {
         $query = $connection->prepare("INSERT INTO user (firstname, lastname, password, username, email, birthday, created_at, updated_at, role_id, salt, sex) VALUES ('$info[firstname]', '$info[lastname]', '$info[password]', '$info[login]', '$info[email]', $date, $createdAt, $createdAt, $role, '$salt', '$info[sex]')");
 
         $query->execute();
-        //error_log( "Adding at Users".print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
     }
 }
 ?>

@@ -1,4 +1,5 @@
 <?php
+include "application/core/Logger.php";
 
 class ModelLogin extends Model {
 
@@ -11,7 +12,7 @@ class ModelLogin extends Model {
         $query = $connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
 
         $query->execute();
-        //error_log( print_R($query->errorInfo(),TRUE) );
+        Logger::sqlError($query->errorInfo());
 
         $numrows = $query->rowCount();
 
