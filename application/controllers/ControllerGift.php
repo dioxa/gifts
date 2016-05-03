@@ -26,6 +26,6 @@ class ControllerGift extends Controller {
 
     function actionBind($id) {
         $this->model->bindGift($id);
-        
+        header("Location:/gift/$id");
     }
 }

@@ -16,13 +16,19 @@ class ModelGift extends Model {
         
         $result["gift"] = $query->fetch(PDO::FETCH_ASSOC);
 
-        $query = $connection->prepare("select username from user JOIN (SELECT reciever_id from wishes where gift_id = '$giftId') as gift on gift.reciever_id = id");
+        $query = $connection->prepare("select * from wishes where gift_id = '$giftId'");
         $query->execute();
 
+        $gift = $query->fetch(PDO::FETCH_ASSOC);
 
-
-        if ($query->rowCount() > 0) {
+        if ($gift["receiver_id"] == $_SESSION["id"]) {
             $result["owner"] = true;
+        } else if (isset($gift["sender_id"])) {
+                if ($gift["sender_id"] == $_SESSION["id"]) {
+                    $result["sender"] = true;
+                } else {
+                    $result["flagged"] = true;
+                }
         }
         
         return $result;
