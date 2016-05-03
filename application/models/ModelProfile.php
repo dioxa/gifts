@@ -23,17 +23,27 @@ class ModelProfile extends Model {
         $query->execute();
         Logger::sqlError($query->errorInfo());
 
+        if ($query->rowCount() > 0) {
+            $result["gifts"] = $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         if (!empty($_SESSION["username"])) {
             if ($_SESSION["username"] != $username) {
                 $_POST["username"] = $username;
+                
+                $query = $connection->prepare("SELECT subscriber_id from subscribers JOIN (select id from user where username = '$username') as users on subscriber_id = users.id where user_id = :username");
+                $query->bindParam(":username", $_SESSION["id"]);
+                $query->execute();
+                
+                if ($query->rowCount() > 0) {
+                    $result["following"] = true;
+                }
             }
         } else {
             $_POST["guest"] = true;
         }
         
-        if ($query->rowCount() > 0) {
-            $result["gifts"] = $query->fetchAll(PDO::FETCH_ASSOC);
-        }
+
 
         $query = $connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select subscriber_id from subscribers join (select id from user where username = '$username') as sub on user_id = sub.id) as subscribers on subscribers.subscriber_id = id");
 
@@ -52,7 +62,7 @@ class ModelProfile extends Model {
         if ($query->rowCount() > 0) {
             $result["followers"] = $query->fetchAll(PDO::FETCH_ASSOC);
         }
-
+        
         return $result;
     }
 

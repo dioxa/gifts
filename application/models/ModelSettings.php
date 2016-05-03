@@ -10,14 +10,6 @@ class ModelSettings extends Model {
         $instance = Connect::getInstance();
         $connection = $instance->getConnection();
 
-        $query = $connection->prepare("select photo from user where username = '$_SESSION[username]'");
-
-        $query->execute();
-
-        $path = $query->fetch(PDO::FETCH_ASSOC);
-        if ($path["info"] != "/uploads/profile/mzl.qdfvhgoj.jpg") {
-            unlink(substr($path["photo"], 1));
-        }
 
         $file = UploadValidator::validateImage();
 
@@ -32,6 +24,15 @@ class ModelSettings extends Model {
 
                 $query->execute();
                 Logger::sqlError($query->errorInfo());
+
+                $query = $connection->prepare("select photo from user where username = '$_SESSION[username]'");
+
+                $query->execute();
+
+                $path = $query->fetch(PDO::FETCH_ASSOC);
+                if ($path["info"] != "/uploads/profile/mzl.qdfvhgoj.jpg") {
+                    unlink(substr($path["photo"], 1));
+                }
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }

@@ -4,7 +4,7 @@ echo"<img src=" . $data["userInfo"]["photo"] . " height='200' width='150' class 
 echo $data["userInfo"]["firstname"] . " " . $data["userInfo"]["lastname"];
 echo "<br>";
 
-if(!empty($_POST["username"]) && !isset($_POST["guest"])) {
+if(!empty($_POST["username"]) && !isset($_POST["guest"]) && !isset($data["following"])) {
     echo"<form method='POST' action='/subscribe'>
     <input type='hidden' value='$_POST[username]' name='username'>
     <input type='submit' value='Подписаться'>
