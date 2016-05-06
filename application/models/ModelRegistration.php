@@ -4,9 +4,7 @@ include "application/core/Logger.php";
 class ModelRegistration extends Model {
 
     public function setData($info) {
-
-        require_once("application/core/Connect.php");
-
+        
         $password = $info["password"];
         if(!empty($password)) {
             if (strlen($password) <= '8') {
@@ -45,10 +43,7 @@ class ModelRegistration extends Model {
         $role = 1;
         $createdAt = date("YmdHis");
 
-        $instance = Connect::getInstance();
-        $connection = $instance->getConnection();
-
-        $query = $connection->prepare("INSERT INTO user (firstname, lastname, password, username, email, birthday, created_at, updated_at, role_id, salt, sex) VALUES ('$info[firstname]', '$info[lastname]', '$info[password]', '$info[login]', '$info[email]', $date, $createdAt, $createdAt, $role, '$salt', '$info[sex]')");
+        $query = $this->connection->prepare("INSERT INTO user (firstname, lastname, password, username, email, birthday, created_at, updated_at, role_id, salt, sex) VALUES ('$info[firstname]', '$info[lastname]', '$info[password]', '$info[login]', '$info[email]', $date, $createdAt, $createdAt, $role, '$salt', '$info[sex]')");
 
         $query->execute();
         Logger::sqlError($query->errorInfo());

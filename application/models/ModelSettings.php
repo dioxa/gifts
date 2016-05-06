@@ -4,12 +4,7 @@ include "application/core/Logger.php";
 class ModelSettings extends Model {
 
     public function setProfilePhoto() {
-        require_once("application/core/Connect.php");
         require_once ("application/core/UploadValidator.php");
-
-        $instance = Connect::getInstance();
-        $connection = $instance->getConnection();
-
 
         $file = UploadValidator::validateImage();
 
@@ -19,13 +14,13 @@ class ModelSettings extends Model {
                 echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
                 $filePath = "/" . $file['targetFile'];
 
-                $query = $connection->prepare("update user set photo = '$filePath' where username = :username");
+                $query = $this->connection->prepare("update user set photo = '$filePath' where username = :username");
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();
                 Logger::sqlError($query->errorInfo());
 
-                $query = $connection->prepare("select photo from user where username = '$_SESSION[username]'");
+                $query = $this->connection->prepare("select photo from user where username = '$_SESSION[username]'");
 
                 $query->execute();
 

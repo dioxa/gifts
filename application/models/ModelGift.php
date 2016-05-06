@@ -4,19 +4,14 @@ include "application/core/Logger.php";
 class ModelGift extends Model {
 
     public function getData($giftId) {
-        require_once("application/core/Connect.php");
-
-        $instance = Connect::getInstance();
-        $connection = $instance->getConnection();
-
-        $query = $connection->prepare("Select id, name, description, photo from gift where id = '$giftId'");
+        $query = $this->connection->prepare("Select id, name, description, photo from gift where id = '$giftId'");
         $query->execute();
 
         Logger::sqlError($query->errorInfo());
         
         $result["gift"] = $query->fetch(PDO::FETCH_ASSOC);
 
-        $query = $connection->prepare("select * from wishes where gift_id = '$giftId'");
+        $query = $this->connection->prepare("select * from wishes where gift_id = '$giftId'");
         $query->execute();
 
         $gift = $query->fetch(PDO::FETCH_ASSOC);
@@ -30,28 +25,18 @@ class ModelGift extends Model {
                     $result["flagged"] = true;
                 }
         }
-        
         return $result;
     }
 
     public function bindGift($id) {
-        require_once("application/core/Connect.php");
-
-        $instance = Connect::getInstance();
-        $connection = $instance->getConnection();
-
-        $query = $connection->prepare("UPDATE wishes SET sender_id=:userId WHERE gift_id='$id'");
+        $query = $this->connection->prepare("UPDATE wishes SET sender_id=:userId WHERE gift_id='$id'");
         $query->bindParam(':userId', $_SESSION["id"]);
         $query->execute();
         Logger::sqlError($query->errorInfo());
     }
 
     public function addGift($giftInfo) {
-        require_once("application/core/Connect.php");
         require_once ("application/core/UploadValidator.php");
-
-        $instance = Connect::getInstance();
-        $connection = $instance->getConnection();
 
         $file = UploadValidator::validateImage();
         
@@ -62,15 +47,14 @@ class ModelGift extends Model {
                 $filePath = "/" . $file['targetFile'];
                 $date_created = date("YmdHis");;
 
-                $query = $connection->prepare("INSERT INTO gift (name, description, date_created, photo) VALUES ('$giftInfo[name]',
+                $query = $this->connection->prepare("INSERT INTO gift (name, description, date_created, photo) VALUES ('$giftInfo[name]',
                 '$giftInfo[desc]', $date_created, '$filePath')");
                 $query->bindParam(":username", $_SESSION["username"]);
 
                 $query->execute();
-
                 Logger::sqlError($query->errorInfo());
 
-                $query = $connection->prepare("INSERT INTO wishes (receiver_id, gift_id) VALUES (:userId, (SELECT id from gift where photo = '$filePath'))");
+                $query = $this->connection->prepare("INSERT INTO wishes (receiver_id, gift_id) VALUES (:userId, (SELECT id from gift where photo = '$filePath'))");
                 $query->bindParam(":userId", $_SESSION["id"]);
 
                 $query->execute();
@@ -81,6 +65,23 @@ class ModelGift extends Model {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
+    }
+
+    public function deleteGift($id) {
+        $query = $this->connection->prepare("Select photo from gift where id = '$id'");
+        $query->execute();
+        Logger::sqlError($query->errorInfo());
+
+        $photo = $query->fetch(PDO::FETCH_ASSOC);
+        unlink(substr($photo, 1));
+
+        $query = $this->connection->prepare("DELETE FROM wishes where gift_id = '$id'");
+        $query->execute();
+        Logger::sqlError($query->errorInfo());
+
+        $query = $this->connection->prepare("DELETE FROM gift where id = '$id'");
+        $query->execute();
+        Logger::sqlError($query->errorInfo());
     }
 
 }

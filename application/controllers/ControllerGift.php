@@ -28,4 +28,9 @@ class ControllerGift extends Controller {
         $this->model->bindGift($id);
         header("Location:/gift/$id");
     }
+
+    function actionDelete($id) {
+        $this->model->deleteGift($id);
+        header("Location:/");
+    }
 }

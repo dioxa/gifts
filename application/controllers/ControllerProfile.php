@@ -17,5 +17,15 @@ class ControllerProfile extends Controller {
             Route::ErrorPage404();
         }
     }
+    
+    function actionSubscribe() {
+        $this->model->subscribe();
+        header("location:/profile/");
+    }
+    
+    function actionUnsubscribe() {
+        $this->model->unsubscribe();
+        header("location:/profile/");
+    }
 }
 ?>

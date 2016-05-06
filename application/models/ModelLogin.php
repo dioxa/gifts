@@ -4,12 +4,7 @@ include "application/core/Logger.php";
 class ModelLogin extends Model {
 
     public function login($username, $password) {
-        require_once 'application/core/Connect.php';
-
-        $instance = Connect::getInstance();
-        $connection = $instance->getConnection();
-
-        $query = $connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
+        $query = $this->connection->prepare("SELECT id, username, email, password, salt FROM user  WHERE email = '$username'");
 
         $query->execute();
         Logger::sqlError($query->errorInfo());
