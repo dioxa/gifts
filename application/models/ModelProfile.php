@@ -38,8 +38,8 @@ class ModelProfile extends Model {
             $_POST["guest"] = true;
         }
         
-        $query = $this->connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select subscriber_id from subscribers join (select id from user where username = '$username') as sub on user_id = sub.id) as subscribers on subscribers.subscriber_id = id");
-
+        $query = $this->connection->prepare("SELECT firstname, lastname, photo, username FROM user JOIN (select subscriber_id from subscribers WHERE user_id = :id) as subscribers on subscribers.subscriber_id = id");
+        $query->bindParam(":id", $result["userInfo"]["id"]);
         $query->execute();
         Logger::sqlError($query->errorInfo());
 
@@ -47,8 +47,8 @@ class ModelProfile extends Model {
             $result["subscribers"] = $query->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        $query = $this->connection->prepare("SELECT id, firstname, lastname, photo, username FROM user JOIN (select user_id from subscribers join (select id from user where username = '$username') as sub on subscriber_id = sub.id) as subscribers on subscribers.user_id = id");
-
+        $query = $this->connection->prepare("SELECT firstname, lastname, photo, username FROM user JOIN (select user_id from subscribers where subscriber_id = :id) as subscribers on subscribers.user_id = id");
+        $query->bindParam(":id", $result["userInfo"]["id"]);
         $query->execute();
         Logger::sqlError($query->errorInfo());
 
