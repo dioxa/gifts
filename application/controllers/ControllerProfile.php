@@ -27,5 +27,11 @@ class ControllerProfile extends Controller {
         $this->model->unsubscribe();
         header("location:/profile/");
     }
+
+    function actionLogout() {
+        session_unset();
+        session_destroy();
+        header("Location:/");
+    }
 }
 ?>

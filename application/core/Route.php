@@ -4,7 +4,17 @@ class Route {
     static function start() {
         $controllerName = 'Main';
         $action = 'Index';
-        $routes = explode('/', $_SERVER['REQUEST_URI']);
+
+        if (!empty($_SERVER["QUERY_STRING"])) {
+            $valuesArray = array_values($_GET);
+            $paramName = $valuesArray[0];
+            $uri = explode('?', $_SERVER['REQUEST_URI']);
+            $request = $uri[0];
+        } else {
+            $request = $_SERVER['REQUEST_URI'];
+        }
+
+        $routes = explode('/', $request);
 
         if ( !empty($routes[1]) ) {
             $controllerName = $routes[1];
@@ -32,7 +42,6 @@ class Route {
         if(file_exists($controllerPath)) {
             include "application/controllers/".$controllerFile;
         } else {
-            error_log("File not found. $controllerPath", 0);
             Route::ErrorPage404();
         }
 

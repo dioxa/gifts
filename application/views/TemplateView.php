@@ -20,15 +20,15 @@
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" role="search" method="post" name="username">
+                <form class="navbar-form navbar-left" role="search" method="get" action="/search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="username" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Поиск</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/settings">Настройки</a></li>
-                    <li><a href="/login/logout">Выйти</a></li>
+                    <li><a href="/profile/logout">Выйти</a></li>
                 </ul>
             </div>
         </div>

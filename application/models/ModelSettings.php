@@ -11,6 +11,15 @@ class ModelSettings extends Model {
         if ($file !== false) {
             mkdir($file['targetDir'], 0777, true);
             if ( move_uploaded_file($_FILES["image"]["tmp_name"], $file['targetFile'])) {
+
+                $query = $this->connection->prepare("select photo from user where username = '$_SESSION[username]'");
+                $query->execute();
+
+                $path = $query->fetch(PDO::FETCH_ASSOC);
+                if ($path["info"] != "/uploads/profile/mzl.qdfvhgoj.jpg") {
+                    unlink(substr($path["photo"], 1));
+                }
+
                 echo "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
                 $filePath = "/" . $file['targetFile'];
 
@@ -19,15 +28,6 @@ class ModelSettings extends Model {
 
                 $query->execute();
                 Logger::sqlError($query->errorInfo());
-
-                $query = $this->connection->prepare("select photo from user where username = '$_SESSION[username]'");
-
-                $query->execute();
-
-                $path = $query->fetch(PDO::FETCH_ASSOC);
-                if ($path["info"] != "/uploads/profile/mzl.qdfvhgoj.jpg") {
-                    unlink(substr($path["photo"], 1));
-                }
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }

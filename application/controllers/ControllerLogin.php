@@ -15,9 +15,4 @@ class ControllerLogin extends Controller {
         }
 	}
     
-    function actionLogout() {
-        session_unset();
-        session_destroy();
-        header("Location:/");
-    }
 }
