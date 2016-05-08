@@ -7,12 +7,12 @@ echo "<br>";
 if(!empty($data["pageGuest"]) && !isset($_POST["guest"])) {
     if (!isset($data["following"])) {
         echo "<form method='POST' action='/profile/subscribe'>
-        <input type='hidden' value='". $data['userInfo']['id'] ."' name='username'>
+        <input type='hidden' value='". $data['userInfo']['id'] ."' name='userId'>
         <button type='submit' class='btn btn-primary'>Подписаться</button>
         </form>";
     } else {
         echo "<form method='POST' action='/profile/unsubscribe'>
-        <input type='hidden' value='". $data['userInfo']['id'] ."' name='username'>
+        <input type='hidden' value='". $data['userInfo']['id'] ."' name='userId'>
         <button type='submit' class='btn btn-primary'>Отписаться</button>
         </form>";
     }

@@ -61,20 +61,20 @@ class ModelProfile extends Model {
     }
 
     public function subscribe() {
-        $query = $this->connection->prepare("insert into subscribers(user_id, subscriber_id) values (:userId, :username)");
+        $query = $this->connection->prepare("insert into subscribers(user_id, subscriber_id) values (:userId, :pageId)");
 
         $query->bindParam(":userId", $_SESSION["id"]);
-        $query->bindParam(":username", $_POST["username"]);
+        $query->bindParam(":pageId", $_POST["userId"]);
 
         $query->execute();
         Logger::sqlError($query->errorInfo());
     }
 
     public function unsubscribe() {
-        $query = $this->connection->prepare("DELETE FROM subscribers WHERE user_id = :userId AND subscriber_id = :username");
+        $query = $this->connection->prepare("DELETE FROM subscribers WHERE user_id = :userId AND subscriber_id = :pageId");
 
         $query->bindParam(":userId", $_SESSION["id"]);
-        $query->bindParam(":username", $_POST["username"]);
+        $query->bindParam(":pageId", $_POST["userId"]);
 
         $query->execute();
         Logger::sqlError($query->errorInfo());
