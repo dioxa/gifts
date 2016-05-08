@@ -68,20 +68,27 @@ class ModelGift extends Model {
     }
 
     public function deleteGift($id) {
-        $query = $this->connection->prepare("Select photo from gift where id = '$id'");
+        $query = $this->connection->prepare("SELECT receiver_id FROM wishes WHERE gift_id = '$id'");
         $query->execute();
-        Logger::sqlError($query->errorInfo());
 
-        $photo = $query->fetch(PDO::FETCH_ASSOC);
-        unlink(substr($photo, 1));
+        $owner = $query->fetch(PDO::FETCH_ASSOC);
 
-        $query = $this->connection->prepare("DELETE FROM wishes where gift_id = '$id'");
-        $query->execute();
-        Logger::sqlError($query->errorInfo());
+        if ($owner["receiver_id"] == $_SESSION["id"]) {
+            $query = $this->connection->prepare("Select photo from gift where id = '$id'");
+            $query->execute();
+            Logger::sqlError($query->errorInfo());
 
-        $query = $this->connection->prepare("DELETE FROM gift where id = '$id'");
-        $query->execute();
-        Logger::sqlError($query->errorInfo());
+            $photo = $query->fetch(PDO::FETCH_ASSOC);
+            unlink(substr($photo, 1));
+
+            $query = $this->connection->prepare("DELETE FROM wishes where gift_id = '$id'");
+            $query->execute();
+            Logger::sqlError($query->errorInfo());
+
+            $query = $this->connection->prepare("DELETE FROM gift where id = '$id'");
+            $query->execute();
+            Logger::sqlError($query->errorInfo());
+        }
     }
 
 }
