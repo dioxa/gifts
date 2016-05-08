@@ -1,7 +1,6 @@
-<?php
-echo"<form action='/settings/setphoto' method='post' enctype='multipart/form-data'>
-    Select image to upload:
-    <input type='file' name='image' accept='image/jpeg, image/png' id='fileToUpload'>
-    <input type='submit' value='Upload Image' name='submit'>
-</form>";
-?>
+<div class="container">
+    <form action='/settings/setphoto' method='post' role="form" class="col-lg-6" enctype='multipart/form-data'>
+        Выберите картинку:<input type='file' name='image' accept='image/jpeg, image/png' id='fileToUpload'><br>
+        <input type='submit' class="form-control btn-success" value='Загрузить' name='submit'>
+    </form>
+</div>
