@@ -25,7 +25,8 @@ class ModelProfile extends Model {
 
         if (!empty($_SESSION["username"])) {
             if ($_SESSION["username"] != $username) {
-                $result["pageGuest"] = true;
+                $result["visitor"] = true;
+                
                 $query = $this->connection->prepare("SELECT subscriber_id from subscribers WHERE subscriber_id = :pageId and user_id = :userId");
                 $query->bindParam(":userId", $_SESSION["id"]);
                 $query->bindParam(":pageId", $result["userInfo"]["id"]);
@@ -36,7 +37,7 @@ class ModelProfile extends Model {
                 }
             }
         } else {
-            $_POST["guest"] = true;
+            $result["guest"] = true;
         }
         
         $query = $this->connection->prepare("SELECT firstname, lastname, photo, username FROM user JOIN (select subscriber_id from subscribers WHERE user_id = :id) as subscribers on subscribers.subscriber_id = id");

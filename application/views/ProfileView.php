@@ -4,7 +4,7 @@ echo"<img src=" . $data["userInfo"]["photo"] . " height='200' width='150' class 
 echo $data["userInfo"]["firstname"] . " " . $data["userInfo"]["lastname"];
 echo "<br>";
 
-if(!empty($data["pageGuest"]) && !isset($_POST["guest"])) {
+if(isset($data["visitor"]) && !isset($data["guest"])) {
     if (!isset($data["following"])) {
         echo "<form method='POST' action='/profile/subscribe'>
         <input type='hidden' value='". $data['userInfo']['id'] ."' name='userId'>
@@ -21,7 +21,7 @@ if(!empty($data["pageGuest"]) && !isset($_POST["guest"])) {
 
 
 echo "<br> Желания:<br>";
-if(empty($_POST["username"]) && !isset($_POST["guest"])) {
+if(!isset($data["visitor"]) && !isset($data["guest"])) {
     echo '<div class="col-lg-4"><div class="col-lg-3 table-bordered" ><a href="/gift/add"><img src="../../uploads/add.jpg" class="img-rounded"></a></div></div>';
 }
     if(isset($data["gifts"])) {
