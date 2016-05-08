@@ -13,8 +13,8 @@ class ModelProfile extends Model {
 
         $result["userInfo"] = $query->fetch(PDO::FETCH_ASSOC);
         
-        $query = $this->connection->prepare("SELECT photo, id FROM gift JOIN (select receiver_id, gift_id from wishes join (select id from user where username = :username) as users on receiver_id = users.id) as wish_list on wish_list.gift_id = id");
-        $query->bindParam(":username", $username);
+        $query = $this->connection->prepare("SELECT photo, id FROM gift JOIN (select receiver_id, gift_id from wishes where receiver_id = :userId) as wish_list on wish_list.gift_id = id");
+        $query->bindParam(":userId", $result["userInfo"]["id"]);
 
         $query->execute();
         Logger::sqlError($query->errorInfo());
@@ -26,8 +26,9 @@ class ModelProfile extends Model {
         if (!empty($_SESSION["username"])) {
             if ($_SESSION["username"] != $username) {
                 $result["pageGuest"] = true;
-                $query = $this->connection->prepare("SELECT subscriber_id from subscribers JOIN (select id from user where username = '$username') as users on subscriber_id = users.id where user_id = :username");
-                $query->bindParam(":username", $_SESSION["id"]);
+                $query = $this->connection->prepare("SELECT subscriber_id from subscribers WHERE subscriber_id = :pageId and user_id = :userId");
+                $query->bindParam(":userId", $_SESSION["id"]);
+                $query->bindParam(":pageId", $result["userInfo"]["id"]);
                 $query->execute();
                 
                 if ($query->rowCount() > 0) {
